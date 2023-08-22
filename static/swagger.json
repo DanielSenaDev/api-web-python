@@ -1,0 +1,126 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Daniel Santos de Sena",
+    "version": "1.0.0",
+    "title": "API-WEB"
+    },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    { 
+      "name": "API-WEB",
+      "description": "API-WEB usando Swagger para atividade de BD"
+    }
+  ],
+  "paths": {
+
+    "/": {
+      "get":{
+        "tags":[
+          "API-WEB"
+        ],
+        "summary": "Retorna todos usuarios",
+        "responses": {
+          "200": {
+           "description": "OK"
+         }
+        }
+      },
+      "post":{
+        "tags":[
+          "API-WEB"
+        ],
+        "summary": "Cadastra novo usuario",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400":{
+            "description": "Usuario já existente - Não foi feito o cadastro"
+          }
+        },
+        "requestBody": {
+          "description": "Request",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{cpf}":{
+      "parameters": [
+        {
+          "name": "cpf",
+          "in": "path",
+          "required": true,
+          "description": "CPF do usuario para consulta",
+          "type": "integer"
+        }
+      ],
+      "get":{
+        "tags": [
+          "API-WEB"
+        ],
+        "summary": "Retorno de 1 usuario através do CPF",
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "description": "CPF do usuario para consultar",
+            "schema": {
+              "$ref": "#/components/schemas/cpf"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/cpf"
+            }
+          },
+          "404": {
+            "description": "Usuario nao encontrado pelo CPF"
+          }
+        }
+        
+      }
+
+    }
+  },
+  "components": {
+    "schemas": {
+      "user":{
+        "properties":{
+          "cpf": {
+            "type": "integer"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "data_nascimento": {
+            "type": "string"
+          }
+        }
+          
+      },
+      "cpf": {
+        "properties": {
+          "cpf": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}
